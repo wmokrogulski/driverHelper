@@ -29,7 +29,7 @@ class FaceAnalyzer:
         print(f'shapes: {self.shapes}')
         return frame
 
-    def analyse_still_image(self, image='eyes_closed.jpg'):
+    def analyse_still_image(self, image=EYES_CLOSED_IM):
         frame = cv2.imread(image)
         frame = self.analyse_frame(frame)
         cv2.imshow('frame', frame)
@@ -49,7 +49,7 @@ class FaceAnalyzer:
 
     def run(self):
         # self.analyse_camera_view()
-        self.analyse_still_image()
+        self.analyse_still_image(EYES_OPEN_IM)
 
 
 if __name__ == '__main__':
