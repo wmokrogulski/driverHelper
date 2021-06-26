@@ -27,3 +27,11 @@ def draw_predictions(frame, rect, shape):              # rysowanie prostakątów
 
     for (x, y) in shape:
         cv2.circle(frame, (x, y), 1, (0, 0, 255), -1)
+
+def policz(eyepoints):
+    a = np.linalg.norm(eyepoints[1] - eyepoints[5])
+    b = np.linalg.norm(eyepoints[2] - eyepoints[4])
+    c = np.linalg.norm(eyepoints[0] - eyepoints[3])
+    ear = (a + b)/(2*c)
+
+    return ear

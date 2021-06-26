@@ -26,7 +26,9 @@ class FaceAnalyzer:
             self.ea.analyze_eyes(shapes)
             draw_predictions(frame, rect, shapes)            # rysowanie punktów i prostokąta
             print(f'shapes: {shapes}')
-        EyeAnalyzer.analyze_eye(EyeAnalyzer, shapes)
+        lep, rep = EyeAnalyzer.analyze_eyes(EyeAnalyzer, shapes)
+        EyeAnalyzer.analyze_eye(EyeAnalyzer, lep, rep)
+
 
         return frame
 
