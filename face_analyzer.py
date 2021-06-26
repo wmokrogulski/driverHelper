@@ -2,6 +2,7 @@ import cv2
 import dlib
 from project_utils import *
 from config import *
+from eye_analyzer import *
 
 
 class FaceAnalyzer:
@@ -9,9 +10,8 @@ class FaceAnalyzer:
     def __init__(self, sp_path=SP_PATH):
         self.detector = dlib.get_frontal_face_detector()    # detektor twarzy
         self.predictor = dlib.shape_predictor(sp_path)      # predyktor pkt na twarzach
+        self.ea=EyeAnalyzer()
         self.cap = None                                     # kamera
-        self.shapes = []                                    # zbiór  punktów na twarzach
-        self.rects = []                                     # boxy twarzy
 
     def cam_init(self):
         self.cap = cv2.VideoCapture(0)                      # kamera inicjalizacja
@@ -19,14 +19,13 @@ class FaceAnalyzer:
 
     def analyse_frame(self, frame):
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)      # zamiana na obraz w skali szarości
-        self.rects = self.detector(gray, 1)                 # wyznaczanie współrzędnych prostokątów zawierających twarze
-        self.shapes.clear()                                 # czysczenie, żeby dla każdej klatki była nowa lista
-        for rect in self.rects:                             # wykrywanie punktów dla każdej twarzy
-            shape = self.predictor(gray, rect)
-            shape = shape_to_np(shape)
-            self.shapes.append(shape)
-            draw_predictions(frame, rect, shape)            # rysowanie punktów i prostokąta
-        print(f'shapes: {self.shapes}')
+        rects = self.detector(gray, 1)                 # wyznaczanie współrzędnych prostokątów zawierających twarze
+        for rect in rects:                             # wykrywanie punktów dla każdej twarzy
+            shapes = self.predictor(gray, rect)
+            shapes = shape_to_np(shapes)
+            self.ea.analyze_eyes(shapes)
+            draw_predictions(frame, rect, shapes)            # rysowanie punktów i prostokąta
+            print(f'shapes: {shapes}')
         return frame
 
     def analyse_still_image(self, image=EYES_CLOSED_IM):
