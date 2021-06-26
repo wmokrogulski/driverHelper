@@ -16,10 +16,9 @@ class EyeAnalyzer:
         cr = numpy.linalg.norm(coords[42] - coords[45])
         earr = (ar + br)/(2*cr)
         print(earl, earr)
-        return (earl, earr)
 
-
-        # if eal < EYE_AR_TRESH  & ear < EYE_AR_TRESH
+        if earl < EYE_AR_TRESH and earr < EYE_AR_TRESH:
+            print('Nie śpij!')
 
 
     def analyze_eyes(self, coords):
