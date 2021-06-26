@@ -19,13 +19,15 @@ class FaceAnalyzer:
 
     def analyse_frame(self, frame):
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)      # zamiana na obraz w skali szarości
-        rects = self.detector(gray, 1)                 # wyznaczanie współrzędnych prostokątów zawierających twarze
-        for rect in rects:                             # wykrywanie punktów dla każdej twarzy
+        rects = self.detector(gray, 1)                      # wyznaczanie współrzędnych prostokątów zawierających twarze
+        for rect in rects:                                  # wykrywanie punktów dla każdej twarzy
             shapes = self.predictor(gray, rect)
             shapes = shape_to_np(shapes)
             self.ea.analyze_eyes(shapes)
             draw_predictions(frame, rect, shapes)            # rysowanie punktów i prostokąta
             print(f'shapes: {shapes}')
+        EyeAnalyzer.analyze_eye(EyeAnalyzer, shapes)
+
         return frame
 
     def analyse_still_image(self, image=EYES_CLOSED_IM):
@@ -47,8 +49,8 @@ class FaceAnalyzer:
                 break
 
     def run(self):                                          # funkcja do wykonania
-        self.analyse_camera_view()
-        # self.analyse_still_image(EYES_OPEN_IM)
+        # self.analyse_camera_view()
+        self.analyse_still_image(EYES_OPEN_IM)
 
 
 if __name__ == '__main__':                                  # uruchomienie programu z tego pliku
