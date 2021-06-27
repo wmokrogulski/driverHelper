@@ -18,7 +18,7 @@ class EyeAnalyzer:
         if leftear < EYE_AR_TRESH and rightear < EYE_AR_TRESH:
             print('Nie śpij!')
 
-        return(avgEAR)
+
 
 
 
