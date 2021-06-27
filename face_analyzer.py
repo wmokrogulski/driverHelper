@@ -37,7 +37,7 @@ class FaceAnalyzer:
 
     def analyse_still_image(self, image):
         frame = cv2.imread(image)                           # wczytanie obrazu
-        frame = imutils.resize(frame, width=500, height=600)
+        frame = imutils.resize(frame, width=500, height=666)
         frame = self.analyse_frame(frame)                   # analiza
         cv2.imshow('frame', frame)                          # wyświetlenie obrazu
         k = cv2.waitKey(0)                                  # oczekiwanie na klawisz
@@ -56,7 +56,7 @@ class FaceAnalyzer:
 
     def run(self):                                          # funkcja do wykonania
         #self.analyse_camera_view()
-       self.analyse_still_image('images/otwarte_przechylona_twarz_julka.JPG')
+       self.analyse_still_image('images/szeroko_otwarte_Julka.JPG')
 
 
 if __name__ == '__main__':                                  # uruchomienie programu z tego pliku
