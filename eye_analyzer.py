@@ -14,9 +14,11 @@ class EyeAnalyzer:
         leftear = count_ear(lefteyepoints)
         rightear = count_ear(righteyepoints)
         print(leftear, rightear)
-
+        avgEAR = (leftear+rightear)/2.0
         if leftear < EYE_AR_TRESH and rightear < EYE_AR_TRESH:
             print('Nie śpij!')
+
+        return(avgEAR)
 
 
 

@@ -3,6 +3,7 @@ import dlib
 from project_utils import *
 from config import *
 from eye_analyzer import *
+from detect_blinking import *
 
 
 class FaceAnalyzer:
@@ -27,12 +28,11 @@ class FaceAnalyzer:
             draw_predictions(frame, rect, shapes)            # rysowanie punktów i prostokąta
             print(f'shapes: {shapes}')
         lep, rep = EyeAnalyzer.analyze_eyes(EyeAnalyzer, shapes)
-        EyeAnalyzer.analyze_eye(EyeAnalyzer, lep, rep)
+        earAVG =EyeAnalyzer.analyze_eye(EyeAnalyzer, lep, rep)
 
+        return frame,earAVG
 
-        return frame
-
-    def analyse_still_image(self, image=EYES_CLOSED_IM):
+    def analyse_still_image(self, image= 'images/lewe_zamkniete_Julka.JPG'):
         frame = cv2.imread(image)                           # wczytanie obrazu
         frame = self.analyse_frame(frame)                   # analiza
         cv2.imshow('frame', frame)                          # wyświetlenie obrazu
@@ -40,19 +40,29 @@ class FaceAnalyzer:
         if k == 27 or k == ord('q'):                        # dla q i Esc zamyka okno
             cv2.destroyAllWindows()
 
-    def analyse_camera_view(self):                          # to samo tylko dla obrazu z kamery
+    def analyse_camera_view(self,earAVG):                          # to samo tylko dla obrazu z kamery
         self.cam_init()
         while True:
             ret, frame = self.cap.read()
             frame = self.analyse_frame(frame)
             cv2.imshow('frame', frame)
+            if earAVG < EYE_AR_TRESH:
+                COUNTER=+ 1 #liczba klatek
+
+            else:
+                if COUNTER >= EYE_AR_CONSEC_FRAMES:
+
+                    TOTAL=+1 #liczba naliczonych mrugniec
+
+                COUNTER=0 #zerujemy licznik klatek
+            BlinksAnalyzer.write_blinks(earAVG,frame)
             k = cv2.waitKey(1)
             if k == 27 or k == ord('q'):
                 break
 
     def run(self):                                          # funkcja do wykonania
         # self.analyse_camera_view()
-        self.analyse_still_image(EYES_OPEN_IM)
+        self.analyse_still_image('images/lewe_zamkniete_Julka.JPG')
 
 
 if __name__ == '__main__':                                  # uruchomienie programu z tego pliku
