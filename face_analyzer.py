@@ -1,5 +1,8 @@
 import cv2
 import dlib
+import imutils
+
+
 from project_utils import *
 from config import *
 from eye_analyzer import *
@@ -34,6 +37,7 @@ class FaceAnalyzer:
 
     def analyse_still_image(self, image):
         frame = cv2.imread(image)                           # wczytanie obrazu
+        frame = imutils.resize(frame, width=500, height=600)
         frame = self.analyse_frame(frame)                   # analiza
         cv2.imshow('frame', frame)                          # wyświetlenie obrazu
         k = cv2.waitKey(0)                                  # oczekiwanie na klawisz
@@ -52,7 +56,7 @@ class FaceAnalyzer:
 
     def run(self):                                          # funkcja do wykonania
         #self.analyse_camera_view()
-       self.analyse_still_image('images/lewe_zamkniete_Julka.JPG')
+       self.analyse_still_image('images/otwarte_przechylona_twarz_julka.JPG')
 
 
 if __name__ == '__main__':                                  # uruchomienie programu z tego pliku
