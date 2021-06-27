@@ -30,11 +30,11 @@ class FaceAnalyzer:
         for rect in rects:  # wykrywanie punktów dla każdej twarzy
             shapes = self.predictor(gray, rect)
             shapes = shape_to_np(shapes)
-            self.ea.analyze_eyes(shapes)
             draw_predictions(frame, rect, shapes)  # rysowanie punktów i prostokąta
             print(f'shapes: {shapes}')
-            lep, rep = self.ea.analyze_eyes(shapes)
-            self.ea.analyze_eye(lep, rep)
+            lep, rep = self.ea.extract_eyes(shapes)
+            left_ear, right_ear = self.ea.analyze_eyes(lep, rep)
+            self.ea.disp_ear(frame, left_ear, right_ear)
 
         return frame
 
@@ -69,8 +69,8 @@ class FaceAnalyzer:
 
     def run(self):  # funkcja do wykonania
         # self.analyse_camera_view()
-        # self.analyse_still_image('images/lewe_zamkniete_Julka.JPG')
-        self.analyse_video('images/test.mp4')
+        self.analyse_still_image('images/eyes_closed.jpg')
+        # self.analyse_video('images/test.mp4')
 
 
 if __name__ == '__main__':  # uruchomienie programu z tego pliku
