@@ -69,8 +69,8 @@ class FaceAnalyzer:
 
     def run(self):  # funkcja do wykonania
         # self.analyse_camera_view()
-        self.analyse_still_image('images/eyes_closed.jpg')
-        # self.analyse_video('images/test.mp4')
+        # self.analyse_still_image('images/Karo_zmruzone.jpg')
+        self.analyse_video('images/test.mp4')
 
 
 if __name__ == '__main__':  # uruchomienie programu z tego pliku
